@@ -2,8 +2,7 @@ public with sharing class InsuranceClaimBatch implements Database.Batchable<SObj
 
     // Step 1: Fetch Pending Claims
     public Database.QueryLocator start(Database.BatchableContext bc) {
-
-        return Database.getQueryLocator([
+    return Database.getQueryLocator([
             SELECT Id,
                    Customer_Name__c,
                    Policy_Number__c,

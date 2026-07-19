@@ -1,5 +1,4 @@
 public with sharing class InsuranceController {
-
     // Save Claim
     @AuraEnabled
     public static void saveClaim(
