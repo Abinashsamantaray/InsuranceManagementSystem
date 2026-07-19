@@ -1,0 +1,116 @@
+<template>
+    <div>
+
+        <!-- Claim Form -->
+
+        <lightning-card title="Insurance Claim Management">
+
+            <div class="slds-p-around_medium">
+
+                <lightning-input
+                    label="Customer Name"
+                    data-field="customerName"
+                    value={customerName}
+                    onchange={handleChange}>
+                </lightning-input>
+
+                <lightning-input
+                    label="Policy Number"
+                    data-field="policyNumber"
+                    value={policyNumber}
+                    onchange={handleChange}>
+                </lightning-input>
+
+                <lightning-input
+                    type="number"
+                    label="Claim Amount"
+                    data-field="claimAmount"
+                    value={claimAmount}
+                    onchange={handleChange}>
+                </lightning-input>
+
+                <br/>
+
+                <!-- Save Button -->
+
+                <template if:false={isEditMode}>
+                    <lightning-button
+                        label="Save Claim"
+                        variant="brand"
+                        onclick={handleSave}>
+                    </lightning-button>
+                </template>
+
+                <!-- Update Button -->
+
+                <template if:true={isEditMode}>
+                    <lightning-button
+                        label="Update Claim"
+                        variant="brand"
+                        onclick={handleUpdate}>
+                    </lightning-button>
+                </template>
+
+            </div>
+
+        </lightning-card>
+
+        <!-- Search Customer -->
+
+        <lightning-card title="Search Customer">
+
+            <div class="slds-p-around_medium">
+
+                <!-- Search Customer Name -->
+
+                <lightning-input
+                    label="Customer Name"
+                    data-field="searchCustomerName"
+                    value={searchCustomerName}
+                    onchange={handleChange}>
+                </lightning-input>
+
+                <!-- Search Policy Number -->
+
+                <lightning-input
+                    class="slds-m-top_small"
+                    label="Policy Number"
+                    data-field="searchPolicyNumber"
+                    value={searchPolicyNumber}
+                    onchange={handleChange}>
+                </lightning-input>
+
+                <br/>
+
+                <lightning-button
+                    label="Search"
+                    variant="brand"
+                    onclick={handleSearch}>
+                </lightning-button>
+
+                <lightning-button
+                    class="slds-m-left_small"
+                    label="Show All"
+                    variant="neutral"
+                    onclick={handleShowAll}>
+                </lightning-button>
+
+            </div>
+
+        </lightning-card>
+
+        <!-- Claims Table -->
+
+        <lightning-card title="Insurance Claims">
+
+            <lightning-datatable
+                key-field="Id"
+                data={claims}
+                columns={columns}
+                onrowaction={handleRowAction}>
+            </lightning-datatable>
+
+        </lightning-card>
+
+    </div>
+</template>

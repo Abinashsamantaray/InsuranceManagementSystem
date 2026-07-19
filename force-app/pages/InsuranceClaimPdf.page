@@ -1,0 +1,79 @@
+<apex:page
+    standardController="Insurance_Claim__c"
+    renderAs="pdf"
+    showHeader="false"
+    sidebar="false"
+    applyBodyTag="false">
+
+    <html>
+        <head>
+            <style>
+                body {
+                    font-family: Arial, sans-serif;
+                    font-size: 12px;
+                }
+
+                h1 {
+                    text-align: center;
+                    color: #1F4E79;
+                }
+
+                table {
+                    width: 100%;
+                    border-collapse: collapse;
+                    margin-top: 20px;
+                }
+
+                th {
+                    background: #1F4E79;
+                    color: white;
+                    border: 1px solid black;
+                    padding: 8px;
+                    text-align: left;
+                }
+
+                td {
+                    border: 1px solid black;
+                    padding: 8px;
+                }
+            </style>
+        </head>
+
+        <body>
+
+            <h1>Insurance Claim Report</h1>
+
+            <table>
+
+                <tr>
+                    <th>Claim Name</th>
+                    <td>{!Insurance_Claim__c.Name}</td>
+                </tr>
+
+                <tr>
+                    <th>Customer Name</th>
+                    <td>{!Insurance_Claim__c.Customer_Name__c}</td>
+                </tr>
+
+                <tr>
+                    <th>Policy Number</th>
+                    <td>{!Insurance_Claim__c.Policy_Number__c}</td>
+                </tr>
+
+                <tr>
+                    <th>Claim Amount</th>
+                    <td>{!Insurance_Claim__c.Claim_Amount__c}</td>
+                </tr>
+
+                <tr>
+                    <th>Claim Status</th>
+                    <td>{!Insurance_Claim__c.Claim_Status__c}</td>
+                </tr>
+
+            </table>
+
+        </body>
+
+    </html>
+
+</apex:page>
