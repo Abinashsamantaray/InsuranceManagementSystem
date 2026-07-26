@@ -1,10 +1,12 @@
 import { LightningElement, track, wire } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { refreshApex } from '@salesforce/apex';
+
 import saveClaim from '@salesforce/apex/InsuranceController.saveClaim';
 import updateClaim from '@salesforce/apex/InsuranceController.updateClaim';
 import getAllClaims from '@salesforce/apex/InsuranceController.getAllClaims';
 import searchClaims from '@salesforce/apex/InsuranceController.searchClaims';
+import runInsuranceApiBatch from '@salesforce/apex/InsuranceController.runInsuranceApiBatch';
 
 // Datatable Columns
 const CLAIM_COLUMNS = [
@@ -247,6 +249,7 @@ export default class InsuranceClaim extends LightningElement {
 
     }
 
+    // Show All Records
     handleShowAll() {
 
         if (this.wiredClaimsResult?.data) {
@@ -257,6 +260,50 @@ export default class InsuranceClaim extends LightningElement {
 
         this.searchCustomerName = '';
         this.searchPolicyNumber = '';
+
+    }
+
+    // Import Claims from External API
+    async handleImportClaims() {
+
+        try {
+
+            const result = await runInsuranceApiBatch();
+
+            this.showToast(
+                'Success',
+                result,
+                'success'
+            );
+
+            // Wait for Batch to start
+            setTimeout(async () => {
+
+                await refreshApex(this.wiredClaimsResult);
+
+                if (this.wiredClaimsResult.data) {
+
+                    this.displayedClaims =
+                        this.wiredClaimsResult.data;
+
+                }
+
+            }, 5000);
+
+        }
+        catch (error) {
+
+            const message =
+                error?.body?.message ||
+                'Failed to start Insurance API Batch';
+
+            this.showToast(
+                'Error',
+                message,
+                'error'
+            );
+
+        }
 
     }
 

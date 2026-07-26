@@ -1,4 +1,5 @@
 public with sharing class InsuranceController {
+
     // Save Claim
     @AuraEnabled
     public static void saveClaim(
@@ -14,6 +15,7 @@ public with sharing class InsuranceController {
         );
 
     }
+
 
     // Update Claim
     @AuraEnabled
@@ -33,6 +35,7 @@ public with sharing class InsuranceController {
 
     }
 
+
     // Get All Claims
     @AuraEnabled(cacheable=true)
     public static List<Insurance_Claim__c> getAllClaims() {
@@ -40,6 +43,7 @@ public with sharing class InsuranceController {
         return InsuranceService.getAllClaims();
 
     }
+
 
     // Search Claims using Customer Name and Policy Number
     @AuraEnabled(cacheable=true)
@@ -52,6 +56,31 @@ public with sharing class InsuranceController {
             customerName,
             policyNumber
         );
+
+    }
+
+
+    // Run Insurance API Batch
+    @AuraEnabled
+    public static String runInsuranceApiBatch() {
+
+        Id jobId = Database.executeBatch(
+            new InsuranceApiBatch(),
+            200
+        );
+
+        return 'Insurance API Batch Started Successfully. Job Id: ' + jobId;
+
+    }
+
+
+    // =====================================================
+    // Get Claims from Spring Boot API
+    // =====================================================
+    @AuraEnabled(cacheable=true)
+    public static List<InsuranceClaimWrapper> getApiClaims() {
+
+        return InsuranceApiService.getClaims();
 
     }
 

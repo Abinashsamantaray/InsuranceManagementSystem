@@ -1,7 +1,8 @@
 <template>
+
     <div>
 
-        <!-- Claim Form -->
+        <!-- ================= Claim Form ================= -->
 
         <lightning-card title="Insurance Claim Management">
 
@@ -15,6 +16,7 @@
                 </lightning-input>
 
                 <lightning-input
+                    class="slds-m-top_small"
                     label="Policy Number"
                     data-field="policyNumber"
                     value={policyNumber}
@@ -22,6 +24,7 @@
                 </lightning-input>
 
                 <lightning-input
+                    class="slds-m-top_small"
                     type="number"
                     label="Claim Amount"
                     data-field="claimAmount"
@@ -29,39 +32,46 @@
                     onchange={handleChange}>
                 </lightning-input>
 
-                <br/>
+                <div class="slds-m-top_medium">
 
-                <!-- Save Button -->
+                    <!-- Save Button -->
 
-                <template if:false={isEditMode}>
-                    <lightning-button
-                        label="Save Claim"
-                        variant="brand"
-                        onclick={handleSave}>
-                    </lightning-button>
-                </template>
+                    <template if:false={isEditMode}>
 
-                <!-- Update Button -->
+                        <lightning-button
+                            label="Save Claim"
+                            variant="brand"
+                            onclick={handleSave}>
+                        </lightning-button>
 
-                <template if:true={isEditMode}>
-                    <lightning-button
-                        label="Update Claim"
-                        variant="brand"
-                        onclick={handleUpdate}>
-                    </lightning-button>
-                </template>
+                    </template>
+
+                    <!-- Update Button -->
+
+                    <template if:true={isEditMode}>
+
+                        <lightning-button
+                            label="Update Claim"
+                            variant="brand"
+                            onclick={handleUpdate}>
+                        </lightning-button>
+
+                    </template>
+
+                </div>
 
             </div>
 
         </lightning-card>
 
-        <!-- Search Customer -->
 
-        <lightning-card title="Search Customer">
+        <!-- ================= Search Customer ================= -->
+
+        <lightning-card
+            title="Search Insurance Claims"
+            class="slds-m-top_medium">
 
             <div class="slds-p-around_medium">
-
-                <!-- Search Customer Name -->
 
                 <lightning-input
                     label="Customer Name"
@@ -69,8 +79,6 @@
                     value={searchCustomerName}
                     onchange={handleChange}>
                 </lightning-input>
-
-                <!-- Search Policy Number -->
 
                 <lightning-input
                     class="slds-m-top_small"
@@ -80,37 +88,73 @@
                     onchange={handleChange}>
                 </lightning-input>
 
-                <br/>
+                <div class="slds-m-top_medium">
+
+                    <lightning-button
+                        label="Search"
+                        variant="brand"
+                        onclick={handleSearch}>
+                    </lightning-button>
+
+                    <lightning-button
+                        class="slds-m-left_small"
+                        label="Show All"
+                        variant="neutral"
+                        onclick={handleShowAll}>
+                    </lightning-button>
+
+                </div>
+
+            </div>
+
+        </lightning-card>
+
+
+        <!-- ================= Spring Boot API Integration ================= -->
+
+        <lightning-card
+            title="Spring Boot API Integration"
+            class="slds-m-top_medium">
+
+            <div class="slds-p-around_medium">
+
+                <p class="slds-m-bottom_medium">
+
+                    Click the button below to fetch insurance claims
+                    from the external Spring Boot REST API using
+                    HTTP Callout and Batch Apex.
+
+                </p>
 
                 <lightning-button
-                    label="Search"
-                    variant="brand"
-                    onclick={handleSearch}>
-                </lightning-button>
-
-                <lightning-button
-                    class="slds-m-left_small"
-                    label="Show All"
-                    variant="neutral"
-                    onclick={handleShowAll}>
+                    label="Sync Claims from API"
+                    variant="success"
+                    icon-name="utility:refresh"
+                    onclick={handleImportClaims}>
                 </lightning-button>
 
             </div>
 
         </lightning-card>
 
-        <!-- Claims Table -->
 
-        <lightning-card title="Insurance Claims">
+        <!-- ================= Claims Table ================= -->
+
+        <lightning-card
+            title="Insurance Claims"
+            class="slds-m-top_medium">
 
             <lightning-datatable
                 key-field="Id"
                 data={claims}
                 columns={columns}
+                hide-checkbox-column
+                show-row-number-column
                 onrowaction={handleRowAction}>
             </lightning-datatable>
 
         </lightning-card>
 
     </div>
+
 </template>

@@ -2,9 +2,15 @@ public with sharing class InsuranceScheduler implements Schedulable {
 
     public void execute(SchedulableContext sc) {
 
-        // Start the Batch Apex Job
+        // Execute Existing Claim Processing Batch
         Database.executeBatch(
             new InsuranceClaimBatch(),
+            200
+        );
+
+        // Execute External API Import Batch
+        Database.executeBatch(
+            new InsuranceApiBatch(),
             200
         );
 
