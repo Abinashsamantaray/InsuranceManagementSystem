@@ -18,15 +18,15 @@ for(Contact con : [SELECT Id , Email  from Contact limit 100]){
     }
     Decimal amount = mapOfCon.get(con.Email);
    mapOfCon.put(con.Email, amount + 1);
-}
- */
+} */
+
 
  // 4 Convert comman separated string to list of string
-/* 
+
  String a = 'x,y,z';
  List<String> listOfString = a.split(',');
  System.debug(listOfString);
- */
+
  // 5 SOQL query and get a map returned.
 /* Map<Id,Account> objectQuery = new Map<Id,Account>([select Id , Name , Type from Account]);
 System.debug(objectQuery); */
