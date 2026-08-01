@@ -16,12 +16,14 @@ public with sharing class InsuranceService {
         insert claim;
     }
 
+
     // Update Claim
     public static void updateClaim(
         Id claimId,
         String customerName,
         String policyNumber,
-        Decimal claimAmount
+        Decimal claimAmount,
+        String claimStatus
     ) {
 
         Insurance_Claim__c claim = new Insurance_Claim__c();
@@ -30,9 +32,11 @@ public with sharing class InsuranceService {
         claim.Customer_Name__c = customerName;
         claim.Policy_Number__c = policyNumber;
         claim.Claim_Amount__c = claimAmount;
+        claim.Claim_Status__c = claimStatus;
 
         update claim;
     }
+
 
     // Get All Claims
     public static List<Insurance_Claim__c> getAllClaims() {
@@ -40,6 +44,7 @@ public with sharing class InsuranceService {
         return InsuranceSelector.getAllClaims();
 
     }
+
 
     // Search Claims using Dynamic SOQL
     public static List<Insurance_Claim__c> searchClaims(

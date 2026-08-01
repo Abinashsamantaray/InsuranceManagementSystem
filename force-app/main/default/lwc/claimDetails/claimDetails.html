@@ -1,0 +1,51 @@
+<template>
+
+    <template if:true={claim}>
+
+        <lightning-card title="Claim Details"
+                        icon-name="standard:case">
+
+            <div class="slds-p-around_medium">
+
+                <p>
+                    <strong>Customer Name:</strong>
+                    {claim.Customer_Name__c}
+                </p>
+
+                <p>
+                    <strong>Policy Number:</strong>
+                    {claim.Policy_Number__c}
+                </p>
+
+                <p>
+                    <strong>Claim Amount:</strong>
+                    {claim.Claim_Amount__c}
+                </p>
+
+                <p>
+                    <strong>Status:</strong>
+                    {claim.Claim_Status__c}
+                </p>
+
+                <br/>
+
+                <lightning-button
+                    label="Approve"
+                    variant="success"
+                    onclick={approveClaim}>
+                </lightning-button>
+
+                <lightning-button
+                    label="Reject"
+                    variant="destructive"
+                    class="slds-m-left_small"
+                    onclick={rejectClaim}>
+                </lightning-button>
+
+            </div>
+
+        </lightning-card>
+
+    </template>
+
+</template>

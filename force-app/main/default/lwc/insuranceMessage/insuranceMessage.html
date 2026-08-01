@@ -1,0 +1,31 @@
+<template>
+    <lightning-card title="Child Component">
+
+        <div class="slds-p-around_medium">
+
+            <h2>Hello from Insurance Message Component!</h2>
+
+            <p style="color:red;font-weight:bold">
+                Child Loaded Successfully
+            </p>
+
+            <hr/>
+
+            <p>
+                <strong>Message from Parent:</strong>
+            </p>
+
+            <p>{message}</p>
+
+            <br/>
+
+            <lightning-button
+                label="Send Message to Parent"
+                variant="brand"
+                onclick={sendMessage}>
+            </lightning-button>
+
+        </div>
+
+    </lightning-card>
+</template>

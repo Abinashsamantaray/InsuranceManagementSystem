@@ -1,0 +1,44 @@
+<template>
+    <lightning-card title="Insurance Management Dashboard"
+                    icon-name="standard:dashboard">
+
+        <div class="slds-p-around_medium">
+
+            <h1 class="slds-text-heading_large">
+                Insurance Management System
+            </h1>
+
+            <p>
+                Parent Dashboard Component
+            </p>
+
+            <br/>
+
+            <!-- Display message received from child -->
+            <p>
+                <strong>Message received from Child:</strong>
+            </p>
+
+            <p>{childMessage}</p>
+
+            <br/>
+
+            <lightning-button
+                label="Hide Child"
+                variant="destructive"
+                onclick={hideChild}>
+            </lightning-button>
+
+            <br/><br/>
+
+            <template lwc:if={showChild}>
+                <c-insurance-message
+                    message="Welcome to Insurance Dashboard"
+                    onnotifyparent={handleNotification}>
+                </c-insurance-message>
+            </template>
+
+        </div>
+
+    </lightning-card>
+</template>

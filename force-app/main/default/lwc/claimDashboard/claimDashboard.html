@@ -1,0 +1,40 @@
+<template>
+
+    <lightning-card title="Insurance Claim Dashboard"
+                    icon-name="standard:case">
+
+        <div class="slds-p-around_medium">
+
+            <template if:true={claims}>
+
+                <lightning-datatable
+                    key-field="Id"
+                    data={claims}
+                    columns={columns}
+                    onrowselection={handleRowSelection}
+                    max-row-selection="1">
+                </lightning-datatable>
+
+            </template>
+
+            <template if:true={error}>
+
+                <p style="color:red;">
+                    Error loading claims.
+                </p>
+
+            </template>
+
+        </div>
+
+    </lightning-card>
+
+    <!-- Show Claim Details when a row is selected -->
+    <template if:true={selectedClaim}>
+        <c-claim-details
+    claim={selectedClaim}
+    onclaimaction={handleClaimAction}>
+</c-claim-details>
+    </template>
+
+</template>

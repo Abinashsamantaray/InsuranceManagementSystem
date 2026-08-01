@@ -23,14 +23,16 @@ public with sharing class InsuranceController {
         Id claimId,
         String customerName,
         String policyNumber,
-        Decimal claimAmount
+        Decimal claimAmount,
+        String claimStatus
     ) {
 
         InsuranceService.updateClaim(
             claimId,
             customerName,
             policyNumber,
-            claimAmount
+            claimAmount,
+            claimStatus
         );
 
     }
