@@ -1,6 +1,8 @@
 public with sharing class InsuranceController {
 
+    // =====================================================
     // Save Claim
+    // =====================================================
     @AuraEnabled
     public static void saveClaim(
         String customerName,
@@ -17,7 +19,9 @@ public with sharing class InsuranceController {
     }
 
 
+    // =====================================================
     // Update Claim
+    // =====================================================
     @AuraEnabled
     public static void updateClaim(
         Id claimId,
@@ -38,7 +42,9 @@ public with sharing class InsuranceController {
     }
 
 
+    // =====================================================
     // Get All Claims
+    // =====================================================
     @AuraEnabled(cacheable=true)
     public static List<Insurance_Claim__c> getAllClaims() {
 
@@ -47,7 +53,9 @@ public with sharing class InsuranceController {
     }
 
 
-    // Search Claims using Customer Name and Policy Number
+    // =====================================================
+    // Search Claims
+    // =====================================================
     @AuraEnabled(cacheable=true)
     public static List<Insurance_Claim__c> searchClaims(
         String customerName,
@@ -62,7 +70,9 @@ public with sharing class InsuranceController {
     }
 
 
+    // =====================================================
     // Run Insurance API Batch
+    // =====================================================
     @AuraEnabled
     public static String runInsuranceApiBatch() {
 

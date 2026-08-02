@@ -34,7 +34,6 @@ export default class ClaimDashboard extends LightningElement {
     claims = [];
     error;
     selectedClaim;
-
     wiredClaimsResult;
 
     @wire(getAllClaims)
@@ -108,7 +107,7 @@ export default class ClaimDashboard extends LightningElement {
             this.dispatchEvent(
                 new ShowToastEvent({
                     title: 'Error',
-                    message: error.body.message,
+                    message: error.body?.message || error.message,
                     variant: 'error'
                 })
             );

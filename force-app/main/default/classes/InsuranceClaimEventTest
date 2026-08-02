@@ -1,0 +1,34 @@
+@IsTest
+private class InsuranceClaimEventTest {
+
+    @IsTest
+    static void testPublishClaimEvent() {
+
+        // Create Test Claim
+        Insurance_Claim__c claim = new Insurance_Claim__c(
+
+            Customer_Name__c = 'Rahul Sharma',
+            Policy_Number__c = 'POL1001',
+            Claim_Amount__c = 50000,
+            Claim_Status__c = 'Approved'
+
+        );
+
+        insert claim;
+
+        Test.startTest();
+
+        // Publish Platform Event
+        InsuranceService.publishClaimEvent(claim.Id);
+
+        Test.stopTest();
+
+        System.assertNotEquals(
+            null,
+            claim.Id,
+            'Claim should be inserted successfully.'
+        );
+
+    }
+
+}

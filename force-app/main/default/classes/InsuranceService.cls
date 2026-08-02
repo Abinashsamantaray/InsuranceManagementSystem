@@ -1,6 +1,8 @@
 public with sharing class InsuranceService {
 
+    // =====================================================
     // Save Claim
+    // =====================================================
     public static void saveClaim(
         String customerName,
         String policyNumber,
@@ -14,10 +16,13 @@ public with sharing class InsuranceService {
         claim.Claim_Amount__c = claimAmount;
 
         insert claim;
+
     }
 
 
+    // =====================================================
     // Update Claim
+    // =====================================================
     public static void updateClaim(
         Id claimId,
         String customerName,
@@ -35,10 +40,21 @@ public with sharing class InsuranceService {
         claim.Claim_Status__c = claimStatus;
 
         update claim;
+
+        // Publish Platform Event ONLY for Approved/Rejected
+        if (claimStatus == 'Approved' ||
+            claimStatus == 'Rejected') {
+
+            publishClaimEvent(claim.Id);
+
+        }
+
     }
 
 
+    // =====================================================
     // Get All Claims
+    // =====================================================
     public static List<Insurance_Claim__c> getAllClaims() {
 
         return InsuranceSelector.getAllClaims();
@@ -46,20 +62,23 @@ public with sharing class InsuranceService {
     }
 
 
-    // Search Claims using Dynamic SOQL
+    // =====================================================
+    // Search Claims
+    // =====================================================
     public static List<Insurance_Claim__c> searchClaims(
         String customerName,
         String policyNumber
     ) {
 
         String query =
-            'SELECT Id, Name, Customer_Name__c, ' +
-            'Policy_Number__c, Claim_Amount__c, ' +
-            'Claim_Status__c ' +
+            'SELECT Id, Name, Customer_Name__c,' +
+            ' Customer_Name__c,' +
+            ' Policy_Number__c,' +
+            ' Claim_Amount__c,' +
+            ' Claim_Status__c ' +
             'FROM Insurance_Claim__c ' +
             'WHERE Id != null';
 
-        // Search by Customer Name
         if (String.isNotBlank(customerName)) {
 
             query +=
@@ -69,7 +88,6 @@ public with sharing class InsuranceService {
 
         }
 
-        // Search by Policy Number
         if (String.isNotBlank(policyNumber)) {
 
             query +=
@@ -79,9 +97,51 @@ public with sharing class InsuranceService {
 
         }
 
-        System.debug('Dynamic SOQL Query: ' + query);
-
         return Database.query(query);
+
+    }
+
+
+    // =====================================================
+    // Publish Platform Event
+    // =====================================================
+    public static void publishClaimEvent(Id claimId) {
+
+        Insurance_Claim__c claim = [
+
+            SELECT Id,
+                   Customer_Name__c,
+                   Policy_Number__c,
+                   Claim_Amount__c,
+                   Claim_Status__c
+            FROM Insurance_Claim__c
+            WHERE Id = :claimId
+            LIMIT 1
+
+        ];
+
+        InsuranceClaimEvent__e eventObj =
+            new InsuranceClaimEvent__e();
+
+        eventObj.Claim_Id__c = claim.Id;
+        eventObj.Customer_Name__c = claim.Customer_Name__c;
+        eventObj.Policy_Number__c = claim.Policy_Number__c;
+        eventObj.Claim_Amount__c = claim.Claim_Amount__c;
+        eventObj.Claim_Status__c = claim.Claim_Status__c;
+
+        Database.SaveResult result =
+            EventBus.publish(eventObj);
+
+        if (!result.isSuccess()) {
+
+            for (Database.Error err : result.getErrors()) {
+
+                System.debug('Platform Event Error : ' +
+                    err.getMessage());
+
+            }
+
+        }
 
     }
 
